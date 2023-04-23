@@ -10,6 +10,7 @@ android {
     defaultConfig {
         applicationId = "no.nordicsemi.android.nrfblinky"
         resourceConfigurations.add("en")
+        versionCode = 1
     }
 }
 

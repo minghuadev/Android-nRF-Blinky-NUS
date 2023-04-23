@@ -7,8 +7,18 @@ import no.nordicsemi.android.ble.data.Data
 abstract class ButtonCallback: ProfileReadResponse() {
 
     override fun onDataReceived(device: BluetoothDevice, data: Data) {
+        /*
         if (data.size() == 1) {
             val buttonState = data.getIntValue(Data.FORMAT_UINT8, 0) == 0x01
+            onButtonStateChanged(device, buttonState)
+        } else {
+            onInvalidDataReceived(device, data)
+        }
+         */
+        if (data.size() >= 1) {
+            val btnDFmt = Data.FORMAT_UINT8
+            val btnDat = data.getIntValue(btnDFmt, 0)
+            val buttonState = btnDat == 0x31
             onButtonStateChanged(device, buttonState)
         } else {
             onInvalidDataReceived(device, data)

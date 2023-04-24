@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import no.nordicsemi.android.blinky.control.repository.BlinkyRepository
+import no.nordicsemi.android.blinky.control.view.BlinkyUserData
 import no.nordicsemi.android.common.logger.NordicLogger
 import javax.inject.Inject
 import javax.inject.Named
@@ -60,12 +61,13 @@ class BlinkyViewModel @Inject constructor(
      * Sends a command to the device to toggle the LED state.
      * @param on The new state of the LED.
      */
-    fun turnLed(on: Boolean) {
+    fun turnLed(on: Boolean, userData: BlinkyUserData) {
         val exceptionHandler = CoroutineExceptionHandler { _, _ -> }
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
             // Just like above, when this method throws an exception, it will be caught by the
             // exception handler and ignored.
             repository.turnLed(on)
+            userData.do_send()
         }
     }
 

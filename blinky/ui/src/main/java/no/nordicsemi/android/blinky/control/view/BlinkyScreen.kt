@@ -10,6 +10,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -62,11 +64,17 @@ internal fun BlinkyScreen(
                 Blinky.State.READY -> {
                     val ledState by viewModel.ledState.collectAsStateWithLifecycle()
                     val buttonState by viewModel.buttonState.collectAsStateWithLifecycle()
+                    /* stackoverflow 66494520
+                     * is-there-a-way-to-dynamically-change-the-string-in-text-of-compose
+                     */
+                    val userDataMut = remember { mutableStateOf(BlinkyUserData()) }
+                    val userData by userDataMut
 
                     BlinkyControlView(
                         ledState = ledState,
                         buttonState = buttonState,
-                        onStateChanged = { viewModel.turnLed(it) },
+                        onStateChanged = { viewModel.turnLed(it, userData) },
+                        userData = userData,
                         modifier = Modifier
                             .widthIn(max = 460.dp)
                             .verticalScroll(rememberScrollState())

@@ -25,6 +25,7 @@ import no.nordicsemi.android.common.theme.NordicTheme
 @Composable
 internal fun ButtonControlView(
     state: String,
+    userData: BlinkyUserData,
     modifier: Modifier = Modifier,
 ) {
     OutlinedCard(
@@ -50,6 +51,8 @@ internal fun ButtonControlView(
                     style = MaterialTheme.typography.headlineMedium,
                 )
             }
+            userData.do_recv()
+            var time_diff = userData.get_trip()
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -73,7 +76,7 @@ internal fun ButtonControlView(
                     .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val addition1: String = state
+                val addition1: String = state + " " + time_diff.toString()
                 val add1Mut = mutableStateOf(addition1)
                 val add1Display by add1Mut
                 Text(add1Display)
@@ -88,6 +91,7 @@ private fun ButtonControlViewPreview() {
     NordicTheme {
         ButtonControlView(
             state = "<true_preview_button_control_view>",
+            userData = BlinkyUserData(),
             modifier = Modifier.padding(16.dp),
         )
     }

@@ -51,13 +51,14 @@ class BlinkyRepository @Inject constructor(
             }
         }
 
-    val loggedButtonState: Flow<Boolean>
+    val loggedButtonState: Flow<String>
         get() = blinky.buttonState.onEach {
             // The same applies here.
-            when(it) {
-                true -> Timber.log(LogContract.Log.Level.APPLICATION, "Button pressed")
-                false -> Timber.log(LogContract.Log.Level.APPLICATION, "Button released")
-            }
+            //when(it) {
+            //    true -> Timber.log(LogContract.Log.Level.APPLICATION, "Button pressed")
+            //    false -> Timber.log(LogContract.Log.Level.APPLICATION, "Button released")
+            //}
+            Timber.log(LogContract.Log.Level.APPLICATION, "Button pressed or released: " + it)
         }
 
     override fun release() {

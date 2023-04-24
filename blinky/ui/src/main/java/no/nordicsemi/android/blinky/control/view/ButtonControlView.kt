@@ -11,6 +11,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -22,7 +24,7 @@ import no.nordicsemi.android.common.theme.NordicTheme
 
 @Composable
 internal fun ButtonControlView(
-    state: Boolean,
+    state: String,
     modifier: Modifier = Modifier,
 ) {
     OutlinedCard(
@@ -58,9 +60,23 @@ internal fun ButtonControlView(
                     text = stringResource(R.string.blinky_button_descr),
                     modifier = Modifier.weight(1f)
                 )
+                val stMut = mutableStateOf(state)
+                val stDisplay by stMut
                 Text(
-                    text = if (state) stringResource(R.string.blinky_on) else stringResource(R.string.blinky_off),
+                    //text = if (state) stringResource(R.string.blinky_on) else stringResource(R.string.blinky_off),
+                    stDisplay,
                 )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                val addition1: String = state
+                val add1Mut = mutableStateOf(addition1)
+                val add1Display by add1Mut
+                Text(add1Display)
             }
         }
     }
@@ -71,7 +87,7 @@ internal fun ButtonControlView(
 private fun ButtonControlViewPreview() {
     NordicTheme {
         ButtonControlView(
-            state = true,
+            state = "<true_preview_button_control_view>",
             modifier = Modifier.padding(16.dp),
         )
     }

@@ -18,12 +18,20 @@ abstract class ButtonCallback: ProfileReadResponse() {
         if (data.size() >= 1) {
             val btnDFmt = Data.FORMAT_UINT8
             val btnDat = data.getIntValue(btnDFmt, 0)
-            val buttonState = btnDat == 0x31
+            val buttonSt = btnDat == 0x31
+
+            val buttonState1 = if (buttonSt) "true" else "false"
+            var buttonState2 = ""
+            if (data.size() >= 3) {
+                buttonState2 = "_" + data.toString()
+            }
+            val buttonState = buttonState1 + buttonState2;
+
             onButtonStateChanged(device, buttonState)
         } else {
             onInvalidDataReceived(device, data)
         }
     }
 
-    abstract fun onButtonStateChanged(device: BluetoothDevice, state: Boolean)
+    abstract fun onButtonStateChanged(device: BluetoothDevice, state: String)
 }

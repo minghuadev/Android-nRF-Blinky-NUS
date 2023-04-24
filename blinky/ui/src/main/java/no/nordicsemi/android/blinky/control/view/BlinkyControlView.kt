@@ -12,7 +12,7 @@ import no.nordicsemi.android.common.theme.NordicTheme
 @Composable
 internal fun BlinkyControlView(
     ledState: Boolean,
-    buttonState: Boolean,
+    buttonState: String,
     onStateChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -37,7 +37,7 @@ private fun BlinkyControlViewPreview() {
     NordicTheme {
         BlinkyControlView(
             ledState = true,
-            buttonState = true,
+            buttonState = "<true_preview_blinky_control_view>",
             onStateChanged = {},
             modifier = Modifier.padding(16.dp),
         )
